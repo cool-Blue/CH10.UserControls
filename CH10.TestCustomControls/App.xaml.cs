@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace CH10.TestUserControls
+namespace CH10.TestCustomControls
 {
 	/// <summary>
 	/// Interaction logic for App.xaml
