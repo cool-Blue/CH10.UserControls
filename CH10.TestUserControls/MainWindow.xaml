@@ -8,7 +8,9 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ctrls:ColorPicker SelectedColor="AntiqueWhite" SelectedColorChanged="OnColorChanged"/>
+        
+        <ctrls:ColorPicker SelectedColorChanged="OnColorChanged"/>
+        
         <TextBlock x:Name="_tbcolor" FontSize="20" Grid.Row="1" Margin="8" />
     </Grid>
 </Window>

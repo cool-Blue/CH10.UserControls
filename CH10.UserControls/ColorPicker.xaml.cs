@@ -11,9 +11,14 @@ namespace CH10.UserControls
 	{
 		public ColorPicker()
 		{
+			SelectedColor = Colors.OrangeRed;
 			InitializeComponent();
+			this.uc.DataContext = this;		// set the run time context
 		}
 		
+		
+		// DEPENDENCY PROPERTIES
+
 		// dp for selected color
 		//   POCO backing field
 		public Color SelectedColor
@@ -22,26 +27,33 @@ namespace CH10.UserControls
 			set { SetValue(SelectedColorProperty, value); }
 		}
 
-		//   register it in WPF
+		//   register it in WPF and store the dp identifier on a static field
+		//   include property metadata defaultValue value and PropertyChangedCallback
 		public static readonly DependencyProperty 
 			SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color),
-				typeof(ColorPicker), new UIPropertyMetadata(Colors.Black, OnSelectedColorChanged));
+				typeof(ColorPicker), new UIPropertyMetadata(Colors.OrangeRed, OnSelectedColorChanged));
 
-		// routed event for color selection changed
-		//   register it in the WPF routed events system, 
-		//   ascociate it with ColorPicker and keep a reference
-		public static RoutedEvent SelectedColorChangedEvent =
+		
+		// ROUTED EVENTS
+
+		// routed event for color selection changed that will be called by the DP system
+		//   register it in the WPF routed events system
+		//   conform to the WPF standard event type for property changed 
+		//   ascociate it with ColorPicker and keep a backing reference
+		private static readonly RoutedEvent SelectedColorChangedEvent =
 			EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble,
 			typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPicker));
 
-		//   define the CLR event and defer to the WPF subscription management
-		//   todo understand this better
+		//   exposed a CLR, event to manage incoming subscriptions 
+		//    - pass subscribers to the WPF Routed Events system
+		//      callbacks will be managed by the WPF event system
 		public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
 		{
 			add { AddHandler(SelectedColorChangedEvent, value); }
 			remove { RemoveHandler(SelectedColorChangedEvent, value); }
 		}
-
+		// Callback for the DP system property changed event
+		// Receive the property event and emit a routed event
 		static void OnSelectedColorChanged(DependencyObject obj,
 			DependencyPropertyChangedEventArgs e)
 		{
