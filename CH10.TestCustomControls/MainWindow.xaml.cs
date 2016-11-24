@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace CH10.TestCustomControls
 {
@@ -10,6 +11,13 @@ namespace CH10.TestCustomControls
 		public MainWindow ()
 		{
 			InitializeComponent();
+		}
+
+			private void OnColorChanged(object sender,
+			RoutedPropertyChangedEventArgs<Color> e)
+		{
+			if (_tbcolor != null)
+				_tbcolor.Text = string.Format("Selected Color {0}", e.NewValue);
 		}
 	}
 }

@@ -18,6 +18,7 @@ namespace CH10.UserControls
 		}
 
 		// COMMANDS
+
 		// Use static constructor and bind to CommandManager versions
 		//   (the UserControl instance also has them as members)
 		// Only need to bind once to cover all instances
